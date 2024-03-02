@@ -1,5 +1,5 @@
 from Bot import Bot
-from View import ConsoleView
+from view import ConsoleView
 
 
 def run_bot():

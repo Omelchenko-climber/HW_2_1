@@ -1,7 +1,7 @@
 from datetime import datetime as dt
 import re
 from abc import ABC, abstractmethod
-from View import ConsoleView
+from view import ConsoleView
 
 
 console_view = ConsoleView()
@@ -17,6 +17,9 @@ class Record:
         self.email = email
         self.status = status
         self.note = note
+
+    def __str__(self):
+        return f'Name: {self.name}; Phones: {self.phones}; Birthday: {self.birthday}; Email: {self.email}; Status: {self.status}; Note: {self.note}\n'
 
     def days_to_birthday(self):
         current_datetime = dt.now()
@@ -75,7 +78,7 @@ class Birthday(Field):
             if value:
                 self.value = value
             else:
-                self.value = input("Birthday date(dd/mm/YYYY): ")
+                self.value = console_view.get_user_input("Birthday date(dd/mm/YYYY): ")
             try:
                 if re.match('^\d{2}/\d{2}/\d{4}$', self.value):
                     self.value = dt.strptime(self.value.strip(), "%d/%m/%Y")
@@ -99,7 +102,7 @@ class Email(Field):
             if value:
                 self.value = value
             else:
-                self.value = input("Email: ")
+                self.value = console_view.get_user_input("Email: ")
             try:
                 if re.match('^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$', self.value) or self.value == '':
                     break

@@ -2,35 +2,17 @@ from datetime import datetime as dt, timedelta
 from collections import UserList
 import pickle
 from info import *
-from View import ConsoleView
+from view import ConsoleView
 import os
 
 
 class AddressBook(UserList):
     def __init__(self):
+        super().__init__()
+
         self.data = []
         self.counter = -1
         self.console_view = ConsoleView()
-
-    def __str__(self):
-        result = []
-        for account in self.data:
-            if account['birthday']:
-                birth = account['birthday'].strftime("%d/%m/%Y")
-            else:
-                birth = ''
-            if account['phones']:
-                new_value = []
-                for phone in account['phones']:
-                    print(phone)
-                    if phone:
-                        new_value.append(phone)
-                phone = ', '.join(new_value)
-            else:
-                phone = ''
-            result.append(
-                "_" * 50 + "\n" + f"Name: {account['name']} \nPhones: {phone} \nBirthday: {birth} \nEmail: {account['email']} \nStatus: {account['status']} \nNote: {account['note']}\n" + "_" * 50 + '\n')
-        return '\n'.join(result)
 
     def __next__(self):
         phones = []
@@ -72,6 +54,7 @@ class AddressBook(UserList):
                    'note': record.note}
         self.data.append(account)
         self.log(f"Contact {record.name} has been added.")
+        console_view.get_message(f"Contact {record.name} has been added.")
 
     def save(self, file_name):
         with open(file_name + '.bin', 'wb') as file:
@@ -79,13 +62,23 @@ class AddressBook(UserList):
         self.log("Addressbook has been saved!")
 
     def load(self, file_name):
-        emptyness = os.stat(file_name + '.bin')
-        if emptyness.st_size != 0:
-            with open(file_name + '.bin', 'rb') as file:
+
+        ful_file_name = file_name + '.bin'
+
+        if os.path.exists(ful_file_name):
+
+            with open(ful_file_name, 'rb') as file:
                 self.data = pickle.load(file)
             self.log("Addressbook has been loaded!")
+
         else:
-            self.log('Adressbook has been created!')
+
+            with open(ful_file_name, 'wb') as file:
+                greeting = 'Simple Contact Book'
+                pickle.dump(greeting, file)
+
+            self.log('Addressbook has been created!')
+
         return self.data
 
     def search(self, pattern, category):
@@ -98,7 +91,7 @@ class AddressBook(UserList):
 
                 for phone in account['phones']:
 
-                    if phone.lower().startswith(pattern_new):
+                    if phone.startswith(pattern_new):
                         result.append(account)
             elif account[category_new].lower().replace(' ', '') == pattern_new:
                 result.append(account)
@@ -145,6 +138,7 @@ class AddressBook(UserList):
                 self.data.remove(account)
                 self.log(f"Contact {account['name']} has been removed!")
                 flag = True
+                console_view.get_message(f'The user {account["name"]} was deleted successfully!')
             '''if pattern in account['phones']:
                         account['phones'].remove(pattern)
                         self.log.log(f"Phone number of {account['name']} has been removed!")'''
