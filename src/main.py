@@ -8,7 +8,7 @@ def run_bot():
     bot = Bot()
     bot.book.load("auto_save")
     while True:
-        action = console.get_user_input('Type help for list of commands or enter your command\n')
+        action = console.get_user_input('input_prompt')
         if action == 'help':
             console.get_menu()
         else:

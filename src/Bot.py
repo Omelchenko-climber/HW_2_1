@@ -1,5 +1,6 @@
 from AddressBook import *
 from view import ConsoleView
+from file_sorter import run_file_sorter, counter
 
 class Bot:
     def __init__(self):
@@ -8,12 +9,12 @@ class Bot:
 
     def handle(self, action):
         if action == 'add':
-            name = Name(console_view.get_user_input("Name: ")).value.strip()
+            name = Name(console_view.get_user_input("name", True)).value.strip()
             phones = Phone().value
             birth = Birthday().value
             email = Email().value.strip()
             status = Status().value.strip()
-            note = Note(console_view.get_user_input("Note: ")).value
+            note = Note(console_view.get_user_input("note")).value
             record = Record(name, phones, birth, email, status, note)
             return self.book.add(record)
 
@@ -50,6 +51,10 @@ class Bot:
 
         elif action == 'exit':
             pass
+
+        elif action == 'file manager':
+            run_file_sorter()
+            counter()
 
         else:
             self.console_view.get_error("There is no such command!")

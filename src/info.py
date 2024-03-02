@@ -55,7 +55,7 @@ class Phone(Field):
             if value:
                 self.values = value
             else:
-                self.values = console_view.get_user_input("Phones(+48......... or +38..........) (multiple phones can be added with space between them. +48 pattern has 9 symbols after code): ")
+                self.values = console_view.get_user_input("phones", True)
             try:
                 for number in self.values.split(' '):
                     if re.match('^\+48\d{9}$', number) or re.match('^\\+38\d{10}$', number) or number == '':
@@ -78,7 +78,7 @@ class Birthday(Field):
             if value:
                 self.value = value
             else:
-                self.value = console_view.get_user_input("Birthday date(dd/mm/YYYY): ")
+                self.value = console_view.get_user_input("birthday")
             try:
                 if re.match('^\d{2}/\d{2}/\d{4}$', self.value):
                     self.value = dt.strptime(self.value.strip(), "%d/%m/%Y")
@@ -102,7 +102,7 @@ class Email(Field):
             if value:
                 self.value = value
             else:
-                self.value = console_view.get_user_input("Email: ")
+                self.value = console_view.get_user_input("email")
             try:
                 if re.match('^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$', self.value) or self.value == '':
                     break
@@ -123,7 +123,7 @@ class Status(Field):
             if value:
                 self.value = value
             else:
-                self.value = console_view.get_user_input("Type of relationship (family, friend, work): ")
+                self.value = console_view.get_user_input("status")
             try:
                 if self.value in self.status_types:
                     break

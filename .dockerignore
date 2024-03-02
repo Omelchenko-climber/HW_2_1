@@ -1,0 +1,14 @@
+# Ignore common system and application files
+.git
+.idea
+.vscode
+.DS_Store
+
+# Ignore project dependencies and virtual environments
+venv/
+node_modules/
+*.pyc
+
+# Ignore editor-specific files
+*.swp
+*~
