@@ -160,7 +160,10 @@ class AddressBook(UserList):
         congratulate = {'Monday': [], 'Tuesday': [], 'Wednesday': [], 'Thursday': [], 'Friday': []}
         for account in self.data:
             if account['birthday']:
-                new_birthday = account['birthday'].replace(year=current_year)
+                birth_date = account['birthday']
+                if isinstance(account['birthday'], str):
+                    birth_date = dt.strptime(account['birthday'], "%d/%m/%Y")
+                new_birthday = birth_date.replace(year=current_year)
                 birthday_weekday = new_birthday.weekday()
                 if self.__get_current_week()[0] <= new_birthday.date() < self.__get_current_week()[1]:
                     if birthday_weekday < 5:
@@ -170,5 +173,6 @@ class AddressBook(UserList):
         for key, value in congratulate.items():
             if len(value):
                 result.append(f"{key}: {' '.join(value)}")
-        return '_' * 50 + '\n' + '\n'.join(result) + '\n' + '_' * 50
+        outcome = '_' * 50 + '\n' + '\n'.join(result) + '\n' + '_' * 50
+        console_view.get_message(outcome)
 
