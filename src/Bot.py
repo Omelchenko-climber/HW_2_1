@@ -20,27 +20,27 @@ class Bot:
 
         elif action == 'search':
             self.console_view.get_search()
-            category = console_view.get_user_input('Search category: ')
-            pattern = console_view.get_user_input('Search pattern: ')
+            category = console_view.get_user_input('category')
+            pattern = console_view.get_user_input('pattern')
             result = (self.book.search(pattern, category))
             console_view.get_contacts(result)
 
         elif action == 'edit':
-            contact_name = console_view.get_user_input('Contact name: ')
-            parameter = console_view.get_user_input('Which parameter to edit(name, phones, birthday, status, email, note): ').strip()
-            new_value = console_view.get_user_input("New Value: ")
+            contact_name = console_view.get_user_input('contact name')
+            parameter = console_view.get_user_input('parameter')
+            new_value = console_view.get_user_input('new value')
             return self.book.edit(contact_name, parameter, new_value)
 
         elif action == 'remove':
-            pattern = console_view.get_user_input("Remove (contact name or phone): ")
+            pattern = console_view.get_user_input("remove")
             return self.book.remove(pattern)
 
         elif action == 'save':
-            file_name = console_view.get_user_input("File name: ")
+            file_name = console_view.get_user_input("save")
             return self.book.save(file_name)
 
         elif action == 'load':
-            file_name = console_view.get_user_input("File name: ")
+            file_name = console_view.get_user_input("load")
             return self.book.load(file_name)
 
         elif action == 'congratulate':

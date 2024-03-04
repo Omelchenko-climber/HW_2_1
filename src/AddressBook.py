@@ -112,10 +112,7 @@ class AddressBook(UserList):
                     elif parameter == 'status':
                         new_value = Status(new_value).value
                     elif parameter == 'phones':
-                        new_contact = new_value.split(' ')
-                        new_value = []
-                        for number in new_contact:
-                             new_value.append(Phone(number).value)
+                        new_value = Phone(new_value).value
                     if parameter in account.keys():
                         account[parameter] = new_value
                     else:
@@ -137,12 +134,10 @@ class AddressBook(UserList):
             if account['name'] == pattern:
                 self.data.remove(account)
                 self.log(f"Contact {account['name']} has been removed!")
-                flag = True
                 console_view.get_message(f'The user {account["name"]} was deleted successfully!')
-            '''if pattern in account['phones']:
-                        account['phones'].remove(pattern)
-                        self.log.log(f"Phone number of {account['name']} has been removed!")'''
-        return flag
+                flag = True
+        if not flag:
+            console_view.get_error(f'Can`t find account {pattern}.')
 
     def __get_current_week(self):
         now = dt.now()
@@ -175,4 +170,3 @@ class AddressBook(UserList):
                 result.append(f"{key}: {' '.join(value)}")
         outcome = '_' * 50 + '\n' + '\n'.join(result) + '\n' + '_' * 50
         console_view.get_message(outcome)
-

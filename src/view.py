@@ -60,7 +60,15 @@ class ConsoleView(View):
             "email": "Email: ",
             "status": "Type of relationship (family, friend, work): ",
             "note": "Note: ",
-            "get_path": "Enter the path to the directory you want to sort: "
+            "get_path": "Enter the path to the directory you want to sort: ",
+            'category': 'Search category: ',
+            'pattern': 'Search pattern: ',
+            'remove': 'Remove (contact name or phone): ',
+            'load': 'File name: ',
+            'save': 'File name: ',
+            'parameter': 'Which parameter to edit(name, phones, birthday, status, email, note): ',
+            'new value': 'New Value: ',
+            'contact name': 'Contact name: '
         }
 
         while required:
